@@ -9,7 +9,7 @@ public class App
 {
     public static void main( String... args )
     {
-        Atm rubAtm = new AtmImpl();
+        Atm rubAtm = new AtmImpl(new MoneyRub());
         Money money = new MoneyRub();
         money.put(MoneyRub.BillTypeRub.Rub1000, 3);
 

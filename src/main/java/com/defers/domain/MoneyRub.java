@@ -1,9 +1,26 @@
 package com.defers.domain;
 
-public class MoneyRub extends Money<MoneyRub.BillTypeRub>{
+public class MoneyRub extends Money<MoneyRub.BillTypeRub> {
 
-    public MoneyRub() {
-        super();
+    @Override
+    public int getBalance() {
+        int balance = getMoneyMap().entrySet()
+                .stream()
+                .mapToInt(e -> e.getKey().getSum() * e.getValue())
+                .sum();
+
+        return balance;
+    }
+
+    @Override
+    public Money getMoney(int sum, GetMoneyLogic getMoneyLogic) {
+        Money resultMoney = getMoneyLogic.getMoney(sum, this);
+        return resultMoney;
+    }
+
+    @Override
+    public Money getMoney(int sum) {
+        return getMoney(sum, new GetMoneyRubByBigBills());
     }
 
     public enum BillTypeRub {
@@ -12,25 +29,15 @@ public class MoneyRub extends Money<MoneyRub.BillTypeRub>{
         Rub1000(1000),
         Rub5000(5000);
 
-        private final Integer sum;
+        private final int sum;
 
-        BillTypeRub(Integer sum) {
+        BillTypeRub(int sum) {
             this.sum = sum;
         }
 
-        Integer getSum() {
+        int getSum() {
             return this.sum;
         }
-    }
-
-    @Override
-    public Integer getBalance() {
-        Integer balance = getMoneyMap().entrySet()
-                .stream()
-                .mapToInt(e -> e.getKey().getSum() * e.getValue())
-                .sum();
-
-        return balance;
     }
 
 }

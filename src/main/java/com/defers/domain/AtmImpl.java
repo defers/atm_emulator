@@ -2,7 +2,11 @@ package com.defers.domain;
 
 public class AtmImpl implements Atm {
 
-    private Money moneyAtm = new MoneyRub();
+    private Money moneyAtm;
+
+    public AtmImpl(Money moneyAtm) {
+        this.moneyAtm = moneyAtm;
+    }
 
     @Override
     public void put(Money money) {

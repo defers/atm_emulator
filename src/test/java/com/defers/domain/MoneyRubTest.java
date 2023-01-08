@@ -24,7 +24,7 @@ public class MoneyRubTest {
     public void putMoney500Quantity3() {
         money.put(MoneyRub.BillTypeRub.Rub500, 3);
 
-        Integer expected = 500 * 3;
+        int expected = 500 * 3;
 
         assertEquals(expected, money.getBalance());
     }
@@ -34,7 +34,7 @@ public class MoneyRubTest {
         money.put(MoneyRub.BillTypeRub.Rub500, 3);
         money.put(MoneyRub.BillTypeRub.Rub1000, 2);
 
-        Integer expected = (500 * 3) + (1000 * 2);
+        int expected = (500 * 3) + (1000 * 2);
 
         assertEquals(expected, money.getBalance());
     }
@@ -45,7 +45,7 @@ public class MoneyRubTest {
         money.put(MoneyRub.BillTypeRub.Rub1000, 2);
         money.put(MoneyRub.BillTypeRub.Rub500, 1);
 
-        Integer expected = (500 * 3) + (1000 * 2) + (500 * 1);
+        int expected = (500 * 3) + (1000 * 2) + (500 * 1);
 
         assertEquals(expected, money.getBalance());
     }
@@ -64,6 +64,16 @@ public class MoneyRubTest {
                 .collect(Collectors.toList());
 
         assertThat(result, hasSize(2));
+
+    }
+
+    @Test
+    public void getMoney() {
+        money.put(MoneyRub.BillTypeRub.Rub500, 3);
+        money.put(MoneyRub.BillTypeRub.Rub1000, 2);
+        money.put(MoneyRub.BillTypeRub.Rub5000, 2);
+
+        var moneyMap = money.getMoney(5500);
 
     }
 

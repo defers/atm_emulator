@@ -3,17 +3,11 @@ package com.defers.domain;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class Money<T> {
-    private Map<T, Integer> moneyMap = new HashMap();
+public abstract class Money<T extends Enum> {
+    private Map<T, Integer> moneyMap = new HashMap<>();
 
-    public void put(T billType, Integer sum) {
-        Integer value = moneyMap.get(billType);
-        if (value == null) {
-            moneyMap.put(billType, sum);
-        }
-        else {
-            moneyMap.put(billType, value + sum);
-        }
+    public void put(T billType, int sum) {
+        moneyMap.merge(billType, sum, Integer::sum);
     }
 
     public void put(Money anotherMoney) {
@@ -28,6 +22,23 @@ public abstract class Money<T> {
         return moneyMap;
     }
 
-    public abstract Integer getBalance();
+    protected void decreaseBillQuantity(T billType, int quantity) {
+        int value = moneyMap.get(billType);
+
+        if (quantity > value) {
+            throw new RuntimeException("Количество банкнот больше, чем есть в наличии");
+        }
+
+        moneyMap.put(billType, value - quantity);
+        if (value == 0) {
+            getMoneyMap().remove(billType);
+        }
+    }
+
+    public abstract Money getMoney(int sum, GetMoneyLogic getMoneyLogic);
+
+    public abstract Money getMoney(int sum);
+
+    public abstract int getBalance();
 
 }
