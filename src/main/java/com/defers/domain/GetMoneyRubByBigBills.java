@@ -7,10 +7,10 @@ import java.util.stream.Collectors;
 public class GetMoneyRubByBigBills implements GetMoneyLogic {
 
     @Override
-    public Money getMoney(int sum,
-                          Money<MoneyRub.BillTypeRub> money) {
+    public Money getMoney(int sum, Money<MoneyRub.BillTypeRub> money) {
 
         List<Map.Entry<MoneyRub.BillTypeRub, Integer>> entryList = sortAndGetEntryList(money);
+        Money<MoneyRub.BillTypeRub> gottenMoney = new MoneyRub();
 
         for (Map.Entry<MoneyRub.BillTypeRub, Integer> entry : entryList) {
             System.out.println(entry.getKey() + " " + entry.getValue());
@@ -25,6 +25,7 @@ public class GetMoneyRubByBigBills implements GetMoneyLogic {
                 sum -= (quantity * billValue);
 
                 money.decreaseBillQuantity(billType, quantity);
+                gottenMoney.put(billType, quantity);
 
                 if (sum < 0) {
                     throw new RuntimeException("Выдано больше купюр, чем нужно");
@@ -39,7 +40,7 @@ public class GetMoneyRubByBigBills implements GetMoneyLogic {
             throw new RuntimeException("Нет нужных купюр к выдаче");
         }
 
-        return new MoneyRub();
+        return gottenMoney;
     }
 
     private List<Map.Entry<MoneyRub.BillTypeRub, Integer>> sortAndGetEntryList(Money<MoneyRub.BillTypeRub> money) {

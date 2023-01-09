@@ -14,7 +14,8 @@ public class MoneyRub extends Money<MoneyRub.BillTypeRub> {
 
     @Override
     public Money getMoney(int sum, GetMoneyLogic getMoneyLogic) {
-        Money resultMoney = getMoneyLogic.getMoney(sum, this);
+        Money resultMoney = getMoneyLogic.getMoney(sum, this); // TODO Этого метода не должно быть в классе Money,
+        // TODO нужно вынести логику в АТМ
         return resultMoney;
     }
 
