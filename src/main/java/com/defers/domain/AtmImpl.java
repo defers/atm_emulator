@@ -14,12 +14,18 @@ public class AtmImpl implements Atm {
     }
 
     @Override
-    public Money get(Integer sum) {
-        return moneyAtm;
+    public Integer balance() {
+        return moneyAtm.getBalance();
     }
 
     @Override
-    public Integer balance() {
-        return moneyAtm.getBalance();
+    public Money get(int sum, GetMoneyLogic getMoneyLogic) {
+        Money resultMoney = getMoneyLogic.getMoney(sum, moneyAtm);
+        return resultMoney;
+    }
+
+    @Override
+    public Money get(int sum) {
+        return get(sum, new GetMoneyRubByBigBills());
     }
 }

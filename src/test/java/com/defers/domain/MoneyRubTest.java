@@ -67,15 +67,4 @@ public class MoneyRubTest {
 
     }
 
-    @Test
-    public void getMoney() {
-        money.put(MoneyRub.BillTypeRub.Rub500, 3);
-        money.put(MoneyRub.BillTypeRub.Rub1000, 2);
-        money.put(MoneyRub.BillTypeRub.Rub5000, 2);
-
-        var moneyMap = money.getMoney(5500);
-
-    }
-
-
 }

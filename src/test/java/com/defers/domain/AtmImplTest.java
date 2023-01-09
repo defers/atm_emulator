@@ -29,13 +29,14 @@ public class AtmImplTest {
 
     @Test
     public void get() {
-//        money.put(MoneyRub.BillTypeRub.Rub5000, 5);
-//        money.put(MoneyRub.BillTypeRub.Rub1000, 2);
-//        atm.put(money);
-//
-//        Integer expected = 5000; // TODO
-//
-//        assertEquals(expected, atm.get(5000));
+        money.put(MoneyRub.BillTypeRub.Rub5000, 2);
+        money.put(MoneyRub.BillTypeRub.Rub1000, 2);
+        money.put(MoneyRub.BillTypeRub.Rub500, 3);
+        atm.put(money);
+
+        int expected = 13500;
+
+        assertEquals(expected, atm.get(expected).getBalance());
     }
 
     @Test

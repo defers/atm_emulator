@@ -7,32 +7,14 @@ import java.util.stream.Collectors;
 public class GetMoneyRubByBigBills implements GetMoneyLogic {
 
     @Override
-    public Money getMoney(int sum, Money<MoneyRub.BillTypeRub> money) {
+    public Money getMoney(int sum, Money<MoneyRub.BillTypeRub> moneyFrom) {
 
-        List<Map.Entry<MoneyRub.BillTypeRub, Integer>> entryList = sortAndGetEntryList(money);
-        Money<MoneyRub.BillTypeRub> gottenMoney = new MoneyRub();
+        List<Map.Entry<MoneyRub.BillTypeRub, Integer>> entryList = sortAndGetEntryList(moneyFrom);
+        Money<MoneyRub.BillTypeRub> moneyTo = new MoneyRub();
 
         for (Map.Entry<MoneyRub.BillTypeRub, Integer> entry : entryList) {
-            System.out.println(entry.getKey() + " " + entry.getValue());
 
-            var billType = entry.getKey();
-            var billQuantity = entry.getValue();
-            var billValue = billType.getSum();
-            int res = sum / billValue;
-
-            if (res > 0 && sum > 0) {
-                int quantity = Math.min(res, billQuantity);
-                sum -= (quantity * billValue);
-
-                money.decreaseBillQuantity(billType, quantity);
-                gottenMoney.put(billType, quantity);
-
-                if (sum < 0) {
-                    throw new RuntimeException("Выдано больше купюр, чем нужно");
-                }
-            }
-            System.out.println(billType + " " + sum);
-            System.out.println(billType + " " + money.getMoneyMap().get(billType));
+            sum = transferMoney(entry, moneyFrom, moneyTo, sum);
 
         }
 
@@ -40,7 +22,7 @@ public class GetMoneyRubByBigBills implements GetMoneyLogic {
             throw new RuntimeException("Нет нужных купюр к выдаче");
         }
 
-        return gottenMoney;
+        return moneyTo;
     }
 
     private List<Map.Entry<MoneyRub.BillTypeRub, Integer>> sortAndGetEntryList(Money<MoneyRub.BillTypeRub> money) {
@@ -49,5 +31,29 @@ public class GetMoneyRubByBigBills implements GetMoneyLogic {
                 .stream()
                 .sorted((o1, o2) -> o2.getKey().getSum() - o1.getKey().getSum())
                 .collect(Collectors.toList());
+    }
+
+    private int transferMoney(Map.Entry<MoneyRub.BillTypeRub, Integer> entry,
+                          Money<MoneyRub.BillTypeRub> moneyFrom,
+                          Money<MoneyRub.BillTypeRub> moneyTo,
+                               int sum) {
+
+        var billType = entry.getKey();
+        var billQuantity = entry.getValue();
+        var billValue = billType.getSum();
+        int res = sum / billValue;
+
+        if (res > 0 && sum > 0) {
+            int quantity = Math.min(res, billQuantity);
+            sum -= (quantity * billValue);
+
+            moneyFrom.decreaseBillQuantity(billType, quantity);
+            moneyTo.put(billType, quantity);
+
+            if (sum < 0) {
+                throw new RuntimeException("Выдано больше купюр, чем нужно");
+            }
+        }
+     return sum;
     }
 }

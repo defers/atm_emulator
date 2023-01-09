@@ -12,18 +12,6 @@ public class MoneyRub extends Money<MoneyRub.BillTypeRub> {
         return balance;
     }
 
-    @Override
-    public Money getMoney(int sum, GetMoneyLogic getMoneyLogic) {
-        Money resultMoney = getMoneyLogic.getMoney(sum, this); // TODO Этого метода не должно быть в классе Money,
-        // TODO нужно вынести логику в АТМ
-        return resultMoney;
-    }
-
-    @Override
-    public Money getMoney(int sum) {
-        return getMoney(sum, new GetMoneyRubByBigBills());
-    }
-
     public enum BillTypeRub {
         Rub100(100),
         Rub500(500),
@@ -40,6 +28,5 @@ public class MoneyRub extends Money<MoneyRub.BillTypeRub> {
             return this.sum;
         }
     }
-
 }
 

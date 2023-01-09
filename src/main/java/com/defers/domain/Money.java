@@ -35,10 +35,6 @@ public abstract class Money<T extends Enum> {
         }
     }
 
-    public abstract Money getMoney(int sum, GetMoneyLogic getMoneyLogic);
-
-    public abstract Money getMoney(int sum);
-
     public abstract int getBalance();
 
 }
