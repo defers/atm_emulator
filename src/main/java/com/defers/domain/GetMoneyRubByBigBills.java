@@ -1,5 +1,7 @@
 package com.defers.domain;
 
+import com.defers.exceptions.BillsException;
+
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -19,7 +21,7 @@ public class GetMoneyRubByBigBills implements GetMoneyLogic {
         }
 
         if (sum > 0) {
-            throw new RuntimeException("Нет нужных купюр к выдаче");
+            throw new BillsException("Нет нужных купюр к выдаче");
         }
 
         return moneyTo;
@@ -51,7 +53,7 @@ public class GetMoneyRubByBigBills implements GetMoneyLogic {
             moneyTo.put(billType, quantity);
 
             if (sum < 0) {
-                throw new RuntimeException("Выдано больше купюр, чем нужно");
+                throw new BillsException("Выдано больше купюр, чем нужно");
             }
         }
      return sum;

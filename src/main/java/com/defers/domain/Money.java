@@ -1,5 +1,7 @@
 package com.defers.domain;
 
+import com.defers.exceptions.BillsException;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,7 +28,7 @@ public abstract class Money<T extends Enum> {
         int value = moneyMap.get(billType);
 
         if (quantity > value) {
-            throw new RuntimeException("Количество банкнот больше, чем есть в наличии");
+            throw new BillsException("Количество банкнот больше, чем есть в наличии");
         }
 
         moneyMap.put(billType, value - quantity);

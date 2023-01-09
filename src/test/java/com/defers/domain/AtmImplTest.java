@@ -1,5 +1,6 @@
 package com.defers.domain;
 
+import com.defers.exceptions.BillsException;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -35,6 +36,17 @@ public class AtmImplTest {
         atm.put(money);
 
         int expected = 13500;
+
+        assertEquals(expected, atm.get(expected).getBalance());
+    }
+
+    @Test(expected = BillsException.class)
+    public void getBillsException() {
+        money.put(MoneyRub.BillTypeRub.Rub5000, 2);
+        money.put(MoneyRub.BillTypeRub.Rub1000, 2);
+        atm.put(money);
+
+        int expected = 20000;
 
         assertEquals(expected, atm.get(expected).getBalance());
     }
