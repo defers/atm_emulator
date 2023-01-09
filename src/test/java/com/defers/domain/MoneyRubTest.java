@@ -2,13 +2,9 @@ package com.defers.domain;
 
 import org.junit.Before;
 import org.junit.Test;
-
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
-
 import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.hasToString;
 import static org.junit.Assert.*;
 
 public class MoneyRubTest {
